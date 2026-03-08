@@ -18,9 +18,10 @@ const descriptions: Record<BookingRoute, string> = {
 };
 
 export function RouteSelect() {
-  const { setRoute, setStep } = useBooking();
+  const { setRoute, setStep, reset } = useBooking();
 
   const handleSelect = (route: BookingRoute) => {
+    reset();
     setRoute(route);
     setStep(1);
   };
