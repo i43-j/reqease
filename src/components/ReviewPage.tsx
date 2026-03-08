@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -10,7 +11,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Loader2, Inbox } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Loader2, Inbox, CalendarDays, Clock, Mail, MapPin, FileText, Hash } from "lucide-react";
 import { format } from "date-fns";
 import { ROOMS, DB, APP_NAME, N8N_WEBHOOK_URL } from "@/config/constants";
 import type { TransactionLog, TransactionItemLog, InventoryItem } from "@/types/booking";
@@ -43,9 +54,23 @@ interface TxWithItems extends TransactionLog {
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
-      <Inbox className="h-12 w-12 opacity-40" />
-      <p>{message}</p>
+    <div className="flex flex-col items-center justify-center py-20 text-muted-foreground gap-4">
+      <div className="rounded-full bg-muted p-4">
+        <Inbox className="h-10 w-10 opacity-40" />
+      </div>
+      <p className="text-sm">{message}</p>
+    </div>
+  );
+}
+
+function InfoRow({ icon: Icon, label, children }: { icon: React.ElementType; label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex items-start gap-2.5">
+      <Icon className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
+      <div className="min-w-0">
+        <span className="text-muted-foreground text-xs">{label}</span>
+        <div className="font-medium text-sm">{children}</div>
+      </div>
     </div>
   );
 }
@@ -61,57 +86,48 @@ function ReviewCard({
   const txId = tx[DB.txCols.id as keyof TransactionLog] as number;
 
   return (
-    <div className="rounded-xl overflow-hidden border border-border shadow-sm">
-      <div className="bg-primary text-primary-foreground px-5 py-4">
-        <h3 className="font-bold text-lg">{APP_NAME} Booking Receipt</h3>
-        <p className="text-sm opacity-80">Transaction #{txId}</p>
+    <div className="rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-shadow">
+      <div className="bg-primary text-primary-foreground px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between">
+        <div>
+          <p className="text-xs opacity-70 uppercase tracking-wider">Transaction</p>
+          <p className="font-bold text-lg">#{txId}</p>
+        </div>
+        <Badge className={`${STATUS_COLORS[tx.status] ?? "bg-muted"} text-xs px-2.5 py-1`}>
+          {tx.status}
+        </Badge>
       </div>
 
-      <div className="bg-card px-5 py-4 space-y-3 text-sm">
-        {tx.lab && (
-          <div>
-            <span className="text-muted-foreground">Room:</span>{" "}
-            <span className="font-medium">{roomName ?? tx.lab}</span>
-          </div>
-        )}
-        <div>
-          <span className="text-muted-foreground">Date:</span>{" "}
-          <span className="font-medium">
-            {tx.booking_date ? format(new Date(tx.booking_date), "PPPP") : "—"}
-          </span>
-        </div>
-        <div>
-          <span className="text-muted-foreground">Time:</span>{" "}
-          <span className="font-medium">
+      <div className="bg-card px-4 sm:px-5 py-4 space-y-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {tx.lab && (
+            <InfoRow icon={MapPin} label="Room">
+              {roomName ?? tx.lab}
+            </InfoRow>
+          )}
+          <InfoRow icon={CalendarDays} label="Date">
+            {tx.booking_date ? format(new Date(tx.booking_date), "PPP") : "—"}
+          </InfoRow>
+          <InfoRow icon={Clock} label="Time">
             {tx.start_time} – {tx.end_time}
-          </span>
-        </div>
-        <div>
-          <span className="text-muted-foreground">Email:</span>{" "}
-          <span className="font-medium">{tx.user_email}</span>
+          </InfoRow>
+          <InfoRow icon={Mail} label="Email">
+            {tx.user_email}
+          </InfoRow>
         </div>
 
         {tx.reason && (
-          <div>
-            <span className="text-muted-foreground">Reason:</span>{" "}
-            <span className="font-medium">{tx.reason}</span>
-          </div>
+          <InfoRow icon={FileText} label="Reason">
+            {tx.reason}
+          </InfoRow>
         )}
 
-        <div>
-          <span className="text-muted-foreground">Submitted:</span>{" "}
-          <span className="font-medium">
-            {format(new Date(tx.timestamp), "PPp")}
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="text-muted-foreground">Status:</span>
+        <div className="flex items-center gap-2 pt-1">
+          <span className="text-xs text-muted-foreground">Update status:</span>
           <Select
             value={tx.status}
             onValueChange={(val) => onStatusChange(txId, val)}
           >
-            <SelectTrigger className="w-[200px] h-8 text-xs">
+            <SelectTrigger className="w-[190px] h-8 text-xs">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -130,12 +146,14 @@ function ReviewCard({
           <>
             <Separator />
             <div>
-              <p className="font-medium mb-2">Items ({tx.items.length})</p>
+              <p className="font-semibold text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                Items ({tx.items.length})
+              </p>
               <div className="space-y-1.5">
                 {tx.items.map((item, i) => (
-                  <div key={i} className="flex items-center justify-between">
-                    <span>{item.stock_description}</span>
-                    <Badge variant="secondary">
+                  <div key={i} className="flex items-center justify-between py-1 px-2 rounded-md bg-muted/40">
+                    <span className="text-sm">{item.stock_description}</span>
+                    <Badge variant="secondary" className="text-xs">
                       {item.qty} {item.uom}
                     </Badge>
                   </div>
@@ -144,6 +162,10 @@ function ReviewCard({
             </div>
           </>
         )}
+
+        <div className="text-[11px] text-muted-foreground pt-1">
+          Submitted {tx.timestamp ? format(new Date(tx.timestamp), "PPp") : "—"}
+        </div>
       </div>
     </div>
   );
@@ -152,6 +174,7 @@ function ReviewCard({
 export function ReviewPage() {
   const [transactions, setTransactions] = useState<TxWithItems[]>([]);
   const [loading, setLoading] = useState(true);
+  const [pendingChange, setPendingChange] = useState<{ txId: number; newStatus: string } | null>(null);
 
   useEffect(() => {
     fetchTransactions();
@@ -221,7 +244,15 @@ export function ReviewPage() {
     setLoading(false);
   };
 
-  const updateStatus = async (txId: number, newStatus: string) => {
+  const handleStatusChange = (txId: number, newStatus: string) => {
+    setPendingChange({ txId, newStatus });
+  };
+
+  const confirmStatusChange = async () => {
+    if (!pendingChange) return;
+    const { txId, newStatus } = pendingChange;
+    setPendingChange(null);
+
     const { error } = await supabase
       .from(DB.tables.transactionLog)
       .update({ [DB.txCols.status]: newStatus })
@@ -241,7 +272,6 @@ export function ReviewPage() {
       )
     );
 
-    // Send webhook when approved
     if (newStatus === DB.statuses.approved) {
       try {
         await fetch(N8N_WEBHOOK_URL, {
@@ -267,31 +297,55 @@ export function ReviewPage() {
   }
 
   return (
-    <div className="container max-w-3xl py-8 space-y-6">
-      <h2 className="text-2xl font-bold">Review Requests</h2>
-      <Tabs defaultValue="all">
-        <TabsList className="w-full">
-          <TabsTrigger value="all" className="flex-1">All</TabsTrigger>
-          <TabsTrigger value="pending" className="flex-1">Due for Approval</TabsTrigger>
-          <TabsTrigger value="resolved" className="flex-1">Approved / Rejected</TabsTrigger>
-          <TabsTrigger value="completed" className="flex-1">Completed</TabsTrigger>
-        </TabsList>
-        {(["all", "pending", "resolved", "completed"] as const).map((key) => (
-          <TabsContent key={key} value={key} className="space-y-4 mt-4">
-            {filter(STATUS_GROUPS[key]).length === 0 ? (
-              <EmptyState message="No requests in this category." />
-            ) : (
-              filter(STATUS_GROUPS[key]).map((tx) => (
-                <ReviewCard
-                  key={tx.transaction_log}
-                  tx={tx}
-                  onStatusChange={updateStatus}
-                />
-              ))
-            )}
-          </TabsContent>
-        ))}
-      </Tabs>
-    </div>
+    <>
+      <div className="container max-w-3xl py-6 sm:py-8 px-4 space-y-5">
+        <div>
+          <h2 className="text-2xl font-bold">Review Requests</h2>
+          <p className="text-sm text-muted-foreground mt-1">Manage and update booking statuses</p>
+        </div>
+        <Tabs defaultValue="all">
+          <TabsList className="w-full">
+            <TabsTrigger value="all" className="flex-1 text-xs sm:text-sm">All</TabsTrigger>
+            <TabsTrigger value="pending" className="flex-1 text-xs sm:text-sm">Pending</TabsTrigger>
+            <TabsTrigger value="resolved" className="flex-1 text-xs sm:text-sm">Resolved</TabsTrigger>
+            <TabsTrigger value="completed" className="flex-1 text-xs sm:text-sm">Completed</TabsTrigger>
+          </TabsList>
+          {(["all", "pending", "resolved", "completed"] as const).map((key) => (
+            <TabsContent key={key} value={key} className="space-y-4 mt-4">
+              {filter(STATUS_GROUPS[key]).length === 0 ? (
+                <EmptyState message="No requests in this category." />
+              ) : (
+                filter(STATUS_GROUPS[key]).map((tx) => (
+                  <ReviewCard
+                    key={tx.transaction_log}
+                    tx={tx}
+                    onStatusChange={handleStatusChange}
+                  />
+                ))
+              )}
+            </TabsContent>
+          ))}
+        </Tabs>
+      </div>
+
+      <AlertDialog open={!!pendingChange} onOpenChange={() => setPendingChange(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Status Change</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to change Transaction #{pendingChange?.txId} to{" "}
+              <span className="font-semibold">{pendingChange?.newStatus}</span>?
+              {pendingChange?.newStatus === DB.statuses.approved && (
+                <span className="block mt-1 text-xs">This will also trigger a webhook notification.</span>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmStatusChange}>Confirm</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
