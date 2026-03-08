@@ -2,14 +2,15 @@ import { useState } from "react";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { BookingProvider } from "@/hooks/useBooking";
 import { LoginPage } from "@/components/LoginPage";
-import { Navbar } from "@/components/Navbar";
+import { Navbar, type AppPage } from "@/components/Navbar";
 import { BookingWizard } from "@/components/wizard/BookingWizard";
 import { RequestsPage } from "@/components/RequestsPage";
+import { ReviewPage } from "@/components/ReviewPage";
 import { Loader2 } from "lucide-react";
 
 function AppContent() {
   const { loading } = useAuth();
-  const [activePage, setActivePage] = useState<"home" | "requests">("home");
+  const [activePage, setActivePage] = useState<AppPage>("home");
 
   if (loading) {
     return (
@@ -26,7 +27,9 @@ function AppContent() {
     <BookingProvider>
       <div className="min-h-screen bg-background">
         <Navbar activePage={activePage} onNavigate={setActivePage} />
-        {activePage === "home" ? <BookingWizard /> : <RequestsPage />}
+        {activePage === "home" && <BookingWizard />}
+        {activePage === "requests" && <RequestsPage />}
+        {activePage === "review" && <ReviewPage />}
       </div>
     </BookingProvider>
   );
