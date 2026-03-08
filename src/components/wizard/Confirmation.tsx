@@ -67,10 +67,7 @@ export function Confirmation() {
   };
 
   const handleSubmit = async () => {
-    if (!user?.email) {
-      toast.error("You must be logged in to submit a booking.");
-      return;
-    }
+    const email = user?.email ?? "guest@shap.edu.ph";
     setSubmitting(true);
 
     try {
