@@ -2,6 +2,7 @@ import { useBooking } from "@/hooks/useBooking";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import { EARLIEST_HOUR, LATEST_HOUR } from "@/config/constants";
