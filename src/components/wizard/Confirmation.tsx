@@ -41,7 +41,7 @@ export function Confirmation() {
     return `
       <div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px;">
         <div style="background:#094c25;color:white;padding:20px;border-radius:12px 12px 0 0;">
-          <h1 style="margin:0;font-size:20px;">SciLab Booking Receipt</h1>
+          <h1 style="margin:0;font-size:20px;">${APP_NAME} Booking Receipt</h1>
           <p style="margin:4px 0 0;opacity:0.8;">Transaction #${txId}</p>
         </div>
         <div style="border:1px solid #e5e7eb;border-top:none;padding:20px;border-radius:0 0 12px 12px;">
