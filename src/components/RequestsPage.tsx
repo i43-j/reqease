@@ -120,7 +120,7 @@ export function RequestsPage() {
       .from(DB.tables.transactionLog)
       .select("*")
       .eq(DB.txCols.userEmail, email)
-      .order(DB.txCols.timestamp, { ascending: false });
+      .order(DB.txCols.id, { ascending: false });
 
     if (txError || !txData) {
       setLoading(false);
