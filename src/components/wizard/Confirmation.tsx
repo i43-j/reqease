@@ -67,7 +67,10 @@ export function Confirmation() {
   };
 
   const handleSubmit = async () => {
-    if (!user?.email) return;
+    if (!user?.email) {
+      toast.error("You must be logged in to submit a booking.");
+      return;
+    }
     setSubmitting(true);
 
     try {
