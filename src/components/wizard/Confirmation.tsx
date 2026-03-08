@@ -156,7 +156,6 @@ export function Confirmation() {
               <div>
                 <p className="text-muted-foreground">Room</p>
                 <p className="font-medium">{roomName}</p>
-                <p className="font-medium">{roomName}</p>
               </div>
             )}
             <div>
