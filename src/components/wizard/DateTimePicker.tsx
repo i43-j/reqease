@@ -2,6 +2,7 @@ import { useBooking } from "@/hooks/useBooking";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import { EARLIEST_HOUR, LATEST_HOUR } from "@/config/constants";
@@ -20,7 +21,7 @@ function generateTimeOptions(): string[] {
 const TIME_OPTIONS = generateTimeOptions();
 
 export function DateTimePicker() {
-  const { state, setBookingDate, setStartTime, setEndTime, setStep } = useBooking();
+  const { state, setBookingDate, setStartTime, setEndTime, setRoomReason, setStep } = useBooking();
 
   const getPrevStep = () => {
     if (state.route === "A") return 1;
@@ -34,7 +35,8 @@ export function DateTimePicker() {
     return 4; // Route C
   };
 
-  const canContinue = state.bookingDate && state.startTime && state.endTime && state.startTime < state.endTime;
+  const needsReason = state.route === "B";
+  const canContinue = state.bookingDate && state.startTime && state.endTime && state.startTime < state.endTime && (!needsReason || state.roomReason.trim().length > 0);
 
   return (
     <div className="space-y-6">
@@ -94,10 +96,22 @@ export function DateTimePicker() {
             </Select>
           </div>
 
-          {state.startTime && state.endTime && state.startTime >= state.endTime && (
-            <p className="text-sm text-destructive">End time must be after start time.</p>
-          )}
-        </div>
+           {state.startTime && state.endTime && state.startTime >= state.endTime && (
+             <p className="text-sm text-destructive">End time must be after start time.</p>
+           )}
+
+           {needsReason && (
+             <div className="space-y-2">
+               <label className="text-sm font-medium">Reason for Borrowing</label>
+               <Textarea
+                 placeholder="e.g. Physics experiment on projectile motion"
+                 value={state.roomReason}
+                 onChange={e => setRoomReason(e.target.value)}
+                 rows={3}
+               />
+             </div>
+           )}
+         </div>
       </div>
 
       <div className="flex justify-end">
