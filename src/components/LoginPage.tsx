@@ -15,7 +15,7 @@ export function LoginPage() {
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">SHAP ReqEase</h1>
         </div>
         <p className="text-primary-foreground/80 text-center max-w-md text-base sm:text-lg leading-relaxed">
-          Book science lab rooms, borrow equipment, and manage requests — all in one place.
+          Book science lab rooms, borrow equipment — all in one place.
         </p>
         <div className="flex gap-6 mt-4 text-primary-foreground/60 text-sm">
           <div className="flex items-center gap-2">
