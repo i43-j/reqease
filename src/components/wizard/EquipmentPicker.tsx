@@ -46,9 +46,9 @@ export function EquipmentPicker() {
   };
 
   const getFilteredItems = (): InventoryItem[] => {
-    if (activeTab === "chemicals") return items.filter(i => i.category === "CHEMICAL");
-    if (activeTab === "materials") return items.filter(i => i.category === "CONSUMABLE");
-    if (!activeCategory) return items.filter(i => i.category !== "CHEMICAL" && i.category !== "CONSUMABLE");
+    if (activeTab === "chemicals") return items.filter(i => i.category === DB.chemicalCategory);
+    if (activeTab === "materials") return items.filter(i => i.category === DB.consumableCategory);
+    if (!activeCategory) return items.filter(i => i.category !== DB.chemicalCategory && i.category !== DB.consumableCategory);
     return items.filter(i => i.category === activeCategory);
   };
 
