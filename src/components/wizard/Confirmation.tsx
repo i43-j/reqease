@@ -51,7 +51,7 @@ export function Confirmation() {
           <p><strong>Date:</strong> ${state.bookingDate ? format(state.bookingDate, "PPPP") : ""}</p>
           <p><strong>Time:</strong> ${state.startTime} – ${state.endTime}</p>
           <p><strong>Email:</strong> ${user?.email}</p>
-          <p><strong>Status:</strong> <span style="background:#fcd802;padding:2px 8px;border-radius:4px;font-size:13px;">DUE FOR APPROVAL</span></p>
+          <p><strong>Status:</strong> <span style="background:#fcd802;padding:2px 8px;border-radius:4px;font-size:13px;">${DB.statuses.dueForApproval}</span></p>
           ${
             state.cart.length > 0
               ? `<h3 style="margin-top:16px;">Items</h3>
