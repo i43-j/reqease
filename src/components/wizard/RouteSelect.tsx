@@ -25,12 +25,12 @@ export function RouteSelect() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold">What would you like to do?</h2>
-        <p className="text-muted-foreground mt-1">Select a request type to get started</p>
+    <div className="space-y-10 py-8">
+      <div className="text-center space-y-2">
+        <h2 className="text-4xl font-bold tracking-tight">What would you like to do?</h2>
+        <p className="text-lg text-muted-foreground">Select a request type to get started</p>
       </div>
-      <div className="grid gap-4 md:grid-cols-3 max-w-3xl mx-auto">
+      <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
         {(["A", "B", "C"] as BookingRoute[]).map((route, i) => (
           <motion.div
             key={route}
@@ -42,11 +42,11 @@ export function RouteSelect() {
               className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group"
               onClick={() => handleSelect(route)}
             >
-              <CardContent className="flex flex-col items-center gap-3 p-8 text-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              <CardContent className="flex flex-col items-center gap-4 p-10 text-center">
+                <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   {icons[route]}
                 </div>
-                <h3 className="font-semibold text-lg">{ROUTE_LABELS[route]}</h3>
+                <h3 className="font-semibold text-xl">{ROUTE_LABELS[route]}</h3>
                 <p className="text-sm text-muted-foreground">{descriptions[route]}</p>
               </CardContent>
             </Card>
