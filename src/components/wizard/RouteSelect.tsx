@@ -43,14 +43,12 @@ export function RouteSelect() {
               className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group w-full flex"
               onClick={() => handleSelect(route)}
             >
-              <CardContent className="flex flex-col items-center justify-between gap-4 p-8 text-center w-full h-full">
-                <div className="flex-1 flex flex-col items-center justify-center gap-4">
-                  <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    {icons[route]}
-                  </div>
-                  <h3 className="font-bold text-2xl">{ROUTE_LABELS[route]}</h3>
+              <CardContent className="flex flex-col items-center gap-4 p-8 text-center w-full h-full">
+                <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  {icons[route]}
                 </div>
-                <p className="text-base text-muted-foreground leading-relaxed">{descriptions[route]}</p>
+                <h3 className="font-bold text-2xl min-h-16 flex items-center text-center">{ROUTE_LABELS[route]}</h3>
+                <p className="text-base text-muted-foreground leading-relaxed min-h-14 line-clamp-2">{descriptions[route]}</p>
               </CardContent>
             </Card>
           </motion.div>
