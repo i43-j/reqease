@@ -163,7 +163,7 @@ export function EquipmentPicker() {
               No items found.
             </div>
           ) : (
-            <div className="grid gap-3 grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {filtered.map(item => {
                 const cartQty = getCartQty(item.id);
                 const inCart = cartQty > 0;
