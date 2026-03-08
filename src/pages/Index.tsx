@@ -10,7 +10,7 @@ import { Loader2 } from "lucide-react";
 
 function AppContent() {
   const { loading } = useAuth();
-  const [activePage, setActivePage] = useState<"home" | "requests">("home");
+  const [activePage, setActivePage] = useState<AppPage>("home");
 
   if (loading) {
     return (
