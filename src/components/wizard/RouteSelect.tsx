@@ -1,3 +1,4 @@
+import React from "react";
 import { useBooking } from "@/hooks/useBooking";
 import { Card, CardContent } from "@/components/ui/card";
 import { ROUTE_LABELS, type BookingRoute } from "@/config/constants";
