@@ -2,11 +2,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { APP_NAME } from "@/config/constants";
+import { isAdmin } from "@/config/adminList";
 import logoImg from "@/assets/logo.png";
 
+export type AppPage = "home" | "requests" | "review";
+
 interface NavbarProps {
-  activePage: "home" | "requests";
-  onNavigate: (page: "home" | "requests") => void;
+  activePage: AppPage;
+  onNavigate: (page: AppPage) => void;
 }
 
 export function Navbar({ activePage, onNavigate }: NavbarProps) {
