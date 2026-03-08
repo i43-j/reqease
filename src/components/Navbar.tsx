@@ -45,7 +45,7 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
             >
               Requests
             </button>
-            {isAdmin(user?.email) && (
+            {isAdmin(email) && (
               <button
                 onClick={() => onNavigate("review")}
                 className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
