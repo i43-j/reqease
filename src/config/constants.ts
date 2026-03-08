@@ -39,3 +39,64 @@ export const ROUTE_LABELS: Record<BookingRoute, string> = {
 // ========== TIME CONSTRAINTS ==========
 export const EARLIEST_HOUR = 7;
 export const LATEST_HOUR = 16; // 4 PM
+
+// ========== DATABASE TABLE & COLUMN NAMES ==========
+// Edit these if your Supabase table/column names differ
+
+export const DB = {
+  // --- Items table (inventory) ---
+  tables: {
+    items: "items",
+    transactionLog: "transaction_log",
+    transactionItems: "transaction_items_log",
+  },
+
+  // --- Items table columns ---
+  itemsCols: {
+    id: "id",
+    lab: "lab",
+    category: "category",
+    stockDescription: "stock_description",
+    qty: "qty",
+    uom: "uom",
+    imageKey: "image_key",
+    notes: "notes",
+  },
+
+  // --- Category filter values ---
+  // Items with these categories go to "Chemicals" / "Materials" tabs;
+  // everything else goes to "Equipment" tab
+  chemicalCategory: "CHEMICAL",
+  consumableCategory: "CONSUMABLE",
+
+  // --- Transaction log columns ---
+  txCols: {
+    id: "transaction_log",        // primary key / auto-increment column
+    timestamp: "timestamp",
+    lab: "lab",
+    userEmail: "user_email",
+    status: "status",
+    bookingDate: "booking_date",
+    startTime: "start_time",
+    endTime: "end_time",
+  },
+
+  // --- Transaction items log columns ---
+  txItemsCols: {
+    transactionId: "transaction_id",
+    itemId: "item_id",
+    qty: "qty",
+  },
+
+  // --- Status values ---
+  statuses: {
+    dueForApproval: "DUE FOR APPROVAL",
+    approved: "APPROVED",
+    rejected: "REJECTED",
+    completed: "COMPLETED",
+  },
+
+  // --- Image path pattern ---
+  // Final URL = STORAGE_BASE_URL + "/" + imageKey + imageExtension
+  imageExtension: ".png",
+} as const;

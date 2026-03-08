@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useBooking } from "@/hooks/useBooking";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabase";
-import { N8N_WEBHOOK_URL, ROUTE_LABELS, ROOMS } from "@/config/constants";
+import { N8N_WEBHOOK_URL, ROUTE_LABELS, ROOMS, DB, APP_NAME } from "@/config/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -41,7 +41,7 @@ export function Confirmation() {
     return `
       <div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px;">
         <div style="background:#094c25;color:white;padding:20px;border-radius:12px 12px 0 0;">
-          <h1 style="margin:0;font-size:20px;">SciLab Booking Receipt</h1>
+          <h1 style="margin:0;font-size:20px;">${APP_NAME} Booking Receipt</h1>
           <p style="margin:4px 0 0;opacity:0.8;">Transaction #${txId}</p>
         </div>
         <div style="border:1px solid #e5e7eb;border-top:none;padding:20px;border-radius:0 0 12px 12px;">
@@ -51,7 +51,7 @@ export function Confirmation() {
           <p><strong>Date:</strong> ${state.bookingDate ? format(state.bookingDate, "PPPP") : ""}</p>
           <p><strong>Time:</strong> ${state.startTime} – ${state.endTime}</p>
           <p><strong>Email:</strong> ${user?.email}</p>
-          <p><strong>Status:</strong> <span style="background:#fcd802;padding:2px 8px;border-radius:4px;font-size:13px;">DUE FOR APPROVAL</span></p>
+          <p><strong>Status:</strong> <span style="background:#fcd802;padding:2px 8px;border-radius:4px;font-size:13px;">${DB.statuses.dueForApproval}</span></p>
           ${
             state.cart.length > 0
               ? `<h3 style="margin-top:16px;">Items</h3>
@@ -73,30 +73,30 @@ export function Confirmation() {
     try {
       // 1. Insert transaction_log
       const { data: txData, error: txError } = await supabase
-        .from("transaction_log")
+        .from(DB.tables.transactionLog)
         .insert({
-          lab: state.room ?? null,
-          user_email: user.email,
-          status: "DUE FOR APPROVAL",
-          booking_date: state.bookingDate ? format(state.bookingDate, "yyyy-MM-dd") : null,
-          start_time: state.startTime,
-          end_time: state.endTime,
+          [DB.txCols.lab]: state.room ?? null,
+          [DB.txCols.userEmail]: user.email,
+          [DB.txCols.status]: DB.statuses.dueForApproval,
+          [DB.txCols.bookingDate]: state.bookingDate ? format(state.bookingDate, "yyyy-MM-dd") : null,
+          [DB.txCols.startTime]: state.startTime,
+          [DB.txCols.endTime]: state.endTime,
         })
-        .select("transaction_log")
+        .select(DB.txCols.id)
         .single();
 
       if (txError) throw txError;
-      const txId = txData.transaction_log;
+      const txId = txData[DB.txCols.id];
 
       // 2. Insert transaction_items_log
       if (state.cart.length > 0) {
         const itemRows = state.cart.map(c => ({
-          transaction_id: txId,
-          item_id: c.item.id,
-          qty: c.quantity,
+          [DB.txItemsCols.transactionId]: txId,
+          [DB.txItemsCols.itemId]: c.item.id,
+          [DB.txItemsCols.qty]: c.quantity,
         }));
         const { error: itemsError } = await supabase
-          .from("transaction_items_log")
+          .from(DB.tables.transactionItems)
           .insert(itemRows);
         if (itemsError) throw itemsError;
       }
@@ -111,7 +111,7 @@ export function Confirmation() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             to: user.email,
-            subject: `SciLab Booking Receipt — Transaction #${txId}`,
+            subject: `${APP_NAME} Booking Receipt — Transaction #${txId}`,
             html: receiptHTML,
             transaction_id: txId,
           }),

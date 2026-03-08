@@ -6,20 +6,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Inbox } from "lucide-react";
 import { format } from "date-fns";
-import { ROUTE_LABELS, ROOMS } from "@/config/constants";
+import { ROUTE_LABELS, ROOMS, DB } from "@/config/constants";
 import type { TransactionLog } from "@/types/booking";
 
 const STATUS_GROUPS: Record<string, string[]> = {
-  pending: ["DUE FOR APPROVAL"],
-  resolved: ["APPROVED", "REJECTED"],
-  completed: ["COMPLETED"],
+  pending: [DB.statuses.dueForApproval],
+  resolved: [DB.statuses.approved, DB.statuses.rejected],
+  completed: [DB.statuses.completed],
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  "DUE FOR APPROVAL": "bg-warning text-warning-foreground",
-  APPROVED: "bg-success text-success-foreground",
-  REJECTED: "bg-urgent text-urgent-foreground",
-  COMPLETED: "bg-primary text-primary-foreground",
+  [DB.statuses.dueForApproval]: "bg-warning text-warning-foreground",
+  [DB.statuses.approved]: "bg-success text-success-foreground",
+  [DB.statuses.rejected]: "bg-urgent text-urgent-foreground",
+  [DB.statuses.completed]: "bg-primary text-primary-foreground",
 };
 
 function EmptyState({ message }: { message: string }) {
@@ -39,7 +39,7 @@ function RequestCard({ tx }: { tx: TransactionLog }) {
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1 flex-1">
             <div className="flex items-center gap-2">
-              <span className="font-semibold">#{tx.transaction_log}</span>
+              <span className="font-semibold">#{tx[DB.txCols.id as keyof TransactionLog]}</span>
               <Badge className={STATUS_COLORS[tx.status] ?? "bg-muted"}>
                 {tx.status}
               </Badge>
@@ -73,10 +73,10 @@ export function RequestsPage() {
   const fetchTransactions = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from("transaction_log")
+      .from(DB.tables.transactionLog)
       .select("*")
-      .eq("user_email", user!.email!)
-      .order("timestamp", { ascending: false });
+      .eq(DB.txCols.userEmail, user!.email!)
+      .order(DB.txCols.timestamp, { ascending: false });
     if (!error && data) setTransactions(data as TransactionLog[]);
     setLoading(false);
   };

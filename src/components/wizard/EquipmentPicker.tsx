@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useBooking } from "@/hooks/useBooking";
 import { supabase } from "@/lib/supabase";
 import type { InventoryItem, CartItem } from "@/types/booking";
-import { STORAGE_BASE_URL } from "@/config/constants";
+import { STORAGE_BASE_URL, DB } from "@/config/constants";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -27,16 +27,16 @@ export function EquipmentPicker() {
 
   const fetchItems = async () => {
     setLoading(true);
-    let query = supabase.from("items").select("*");
+    let query = supabase.from(DB.tables.items).select("*");
     if (state.route === "C" && state.room) {
-      query = query.eq("lab", state.room);
+      query = query.eq(DB.itemsCols.lab, state.room);
     }
     const { data, error } = await query;
     if (!error && data) {
       setItems(data as InventoryItem[]);
       const eqCats = [...new Set(
         data
-          .filter((d: InventoryItem) => d.category !== "CHEMICAL" && d.category !== "CONSUMABLE")
+          .filter((d: InventoryItem) => d.category !== DB.chemicalCategory && d.category !== DB.consumableCategory)
           .map((d: InventoryItem) => d.category)
       )].sort();
       setCategories(eqCats);
@@ -46,9 +46,9 @@ export function EquipmentPicker() {
   };
 
   const getFilteredItems = (): InventoryItem[] => {
-    if (activeTab === "chemicals") return items.filter(i => i.category === "CHEMICAL");
-    if (activeTab === "materials") return items.filter(i => i.category === "CONSUMABLE");
-    if (!activeCategory) return items.filter(i => i.category !== "CHEMICAL" && i.category !== "CONSUMABLE");
+    if (activeTab === "chemicals") return items.filter(i => i.category === DB.chemicalCategory);
+    if (activeTab === "materials") return items.filter(i => i.category === DB.consumableCategory);
+    if (!activeCategory) return items.filter(i => i.category !== DB.chemicalCategory && i.category !== DB.consumableCategory);
     return items.filter(i => i.category === activeCategory);
   };
 
@@ -189,7 +189,7 @@ export function EquipmentPicker() {
             <Card key={item.id} className={`overflow-hidden transition-all ${cartQty > 0 ? "ring-2 ring-primary" : ""}`}>
               <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
                 <img
-                  src={`${STORAGE_BASE_URL}/${item.image_key}.png`}
+                  src={`${STORAGE_BASE_URL}/${item.image_key}${DB.imageExtension}`}
                   alt={item.stock_description}
                   className="h-full w-full object-cover"
                   loading="lazy"
