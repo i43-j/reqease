@@ -167,9 +167,9 @@ export function EquipmentPicker() {
               {filtered.map(item => {
                 const cartQty = getCartQty(item.id);
                 const inCart = cartQty > 0;
-                const isChemical = activeTab === "chemicals";
+                const isToggleable = activeTab === "chemicals" || activeTab === "materials";
 
-                const handleToggleChemical = () => {
+                const handleToggle = () => {
                   if (inCart) {
                     removeFromCart(item.id);
                   } else {
@@ -180,8 +180,8 @@ export function EquipmentPicker() {
                 return (
                   <Card
                     key={item.id}
-                    className={`overflow-hidden transition-all relative ${inCart ? "ring-2 ring-primary" : ""} ${isChemical ? "cursor-pointer" : ""}`}
-                    onClick={isChemical ? handleToggleChemical : undefined}
+                    className={`overflow-hidden transition-all relative ${inCart ? "ring-2 ring-primary" : ""} ${isToggleable ? "cursor-pointer" : ""}`}
+                    onClick={isToggleable ? handleToggle : undefined}
                   >
                     {inCart && (
                       <div className="absolute top-2 right-2 z-10">
@@ -204,11 +204,7 @@ export function EquipmentPicker() {
                       {item.notes && (
                         <p className="text-xs text-muted-foreground line-clamp-2">{item.notes}</p>
                       )}
-                      {isChemical ? (
-                        <p className={`text-xs font-medium text-center pt-1 ${inCart ? "text-primary" : "text-muted-foreground"}`}>
-                          {inCart ? "✓ Selected" : "Tap to select"}
-                        </p>
-                      ) : (
+                      {!isToggleable && (
                         <>
                           <p className="text-xs text-muted-foreground">Available: {item.qty}</p>
                           <div className="flex items-center justify-center gap-1 pt-1">
@@ -234,20 +230,6 @@ export function EquipmentPicker() {
                           </div>
                         </>
                       )}
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Cart sidebar */}
-        <div className="hidden md:block w-72 shrink-0 sticky top-24">
-          <Card className="border-border">
-            <CardContent className="p-4 space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
                   <ShoppingCart className="h-4 w-4 text-muted-foreground" />
                   <h3 className="font-semibold text-sm uppercase tracking-wider">Cart Summary</h3>
                 </div>
