@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useBooking } from "@/hooks/useBooking";
 import { supabase } from "@/lib/supabase";
 import type { InventoryItem, CartItem } from "@/types/booking";
-import { STORAGE_BASE_URL, DB } from "@/config/constants";
+import { STORAGE_BASE_URL, DB, ROOMS } from "@/config/constants";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -102,7 +102,7 @@ export function EquipmentPicker() {
           <h2 className="text-2xl font-bold">Select Items</h2>
           <p className="text-muted-foreground text-sm">
             {state.route === "C" && state.room
-              ? `Showing inventory for ${state.room}`
+              ? `Showing inventory for ${ROOMS.find(r => r.code === state.room)?.name ?? state.room}`
               : "Showing all available inventory"}
           </p>
         </div>
