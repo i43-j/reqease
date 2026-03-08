@@ -44,6 +44,18 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
             >
               Requests
             </button>
+            {isAdmin(user?.email) && (
+              <button
+                onClick={() => onNavigate("review")}
+                className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+                  activePage === "review"
+                    ? "bg-primary-foreground/20"
+                    : "hover:bg-primary-foreground/10"
+                }`}
+              >
+                Review
+              </button>
+            )}
           </nav>
         </div>
         <div className="flex items-center gap-3">

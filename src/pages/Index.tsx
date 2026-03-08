@@ -27,7 +27,9 @@ function AppContent() {
     <BookingProvider>
       <div className="min-h-screen bg-background">
         <Navbar activePage={activePage} onNavigate={setActivePage} />
-        {activePage === "home" ? <BookingWizard /> : <RequestsPage />}
+        {activePage === "home" && <BookingWizard />}
+        {activePage === "requests" && <RequestsPage />}
+        {activePage === "review" && <ReviewPage />}
       </div>
     </BookingProvider>
   );
