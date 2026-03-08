@@ -186,14 +186,19 @@ export function Confirmation() {
               <div>
                 <p className="text-sm font-medium mb-2">Items ({state.cart.length})</p>
                 <div className="space-y-2">
-                  {state.cart.map(c => (
-                    <div key={c.item.id} className="flex items-center justify-between text-sm">
-                      <span>{c.item.stock_description}</span>
-                      <Badge variant="secondary">
-                        {c.quantity} {c.item.uom}
-                      </Badge>
-                    </div>
-                  ))}
+                  {state.cart.map(c => {
+                    const isToggleItem = c.item.category === DB.chemicalCategory || c.item.category === DB.consumableCategory;
+                    return (
+                      <div key={c.item.id} className="flex items-center justify-between text-sm">
+                        <span>{c.item.stock_description}</span>
+                        {!isToggleItem && (
+                          <Badge variant="secondary">
+                            {c.quantity} {c.item.uom}
+                          </Badge>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </>
