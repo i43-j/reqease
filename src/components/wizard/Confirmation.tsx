@@ -111,7 +111,7 @@ export function Confirmation() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             to: user.email,
-            subject: `SciLab Booking Receipt — Transaction #${txId}`,
+            subject: `${APP_NAME} Booking Receipt — Transaction #${txId}`,
             html: receiptHTML,
             transaction_id: txId,
           }),

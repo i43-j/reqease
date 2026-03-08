@@ -189,7 +189,7 @@ export function EquipmentPicker() {
             <Card key={item.id} className={`overflow-hidden transition-all ${cartQty > 0 ? "ring-2 ring-primary" : ""}`}>
               <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
                 <img
-                  src={`${STORAGE_BASE_URL}/${item.image_key}.png`}
+                  src={`${STORAGE_BASE_URL}/${item.image_key}${DB.imageExtension}`}
                   alt={item.stock_description}
                   className="h-full w-full object-cover"
                   loading="lazy"

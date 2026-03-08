@@ -73,10 +73,10 @@ export function RequestsPage() {
   const fetchTransactions = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from("transaction_log")
+      .from(DB.tables.transactionLog)
       .select("*")
-      .eq("user_email", user!.email!)
-      .order("timestamp", { ascending: false });
+      .eq(DB.txCols.userEmail, user!.email!)
+      .order(DB.txCols.timestamp, { ascending: false });
     if (!error && data) setTransactions(data as TransactionLog[]);
     setLoading(false);
   };
