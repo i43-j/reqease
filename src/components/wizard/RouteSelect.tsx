@@ -5,9 +5,9 @@ import { DoorOpen, Package, Layers } from "lucide-react";
 import { motion } from "framer-motion";
 
 const icons: Record<BookingRoute, React.ReactNode> = {
-  A: <DoorOpen className="h-12 w-12" />,
-  B: <Package className="h-12 w-12" />,
-  C: <Layers className="h-12 w-12" />,
+  A: <DoorOpen className="h-14 w-14" />,
+  B: <Package className="h-14 w-14" />,
+  C: <Layers className="h-14 w-14" />,
 };
 
 const descriptions: Record<BookingRoute, string> = {
