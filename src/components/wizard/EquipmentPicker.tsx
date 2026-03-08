@@ -163,7 +163,7 @@ export function EquipmentPicker() {
               No items found.
             </div>
           ) : (
-            <div className="grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 items-stretch">
               {filtered.map(item => {
                 const cartQty = getCartQty(item.id);
                 const inCart = cartQty > 0;
@@ -180,7 +180,7 @@ export function EquipmentPicker() {
                 return (
                   <Card
                     key={item.id}
-                    className={`overflow-hidden transition-all relative ${inCart ? "ring-2 ring-primary" : ""} ${isToggleable ? "cursor-pointer" : ""}`}
+                    className={`overflow-hidden transition-all relative flex flex-col ${inCart ? "ring-2 ring-primary" : ""} ${isToggleable ? "cursor-pointer" : ""}`}
                     onClick={isToggleable ? handleToggle : undefined}
                   >
                     {inCart && (
@@ -199,37 +199,39 @@ export function EquipmentPicker() {
                         }}
                       />
                     </div>
-                    <CardContent className="p-3 space-y-2">
-                      <h4 className="font-semibold text-sm leading-tight">{item.stock_description}</h4>
-                      {item.notes && (
-                        <p className="text-xs text-muted-foreground line-clamp-2">{item.notes}</p>
-                      )}
-                      {!isToggleable && (
-                        <>
-                          <p className="text-xs text-muted-foreground">Available: {item.qty}</p>
-                          <div className="flex items-center justify-center gap-1 pt-1">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-8 w-8"
-                              onClick={() => handleQtyChange(item, -1)}
-                              disabled={cartQty === 0}
-                            >
-                              <Minus className="h-3 w-3" />
-                            </Button>
-                            <span className="w-10 text-center text-sm font-semibold">{cartQty}</span>
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-8 w-8"
-                              onClick={() => handleQtyChange(item, 1)}
-                              disabled={cartQty >= item.qty}
-                            >
-                              <Plus className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </>
-                      )}
+                    <CardContent className="p-3 flex flex-col flex-1">
+                      <h4 className="font-semibold text-sm leading-tight line-clamp-2 min-h-[2.5rem]">{item.stock_description}</h4>
+                      <p className="text-xs text-muted-foreground line-clamp-2 min-h-[1rem] mt-1">
+                        {item.notes ?? "\u00A0"}
+                      </p>
+                      <div className="mt-auto pt-2">
+                        {!isToggleable && (
+                          <>
+                            <p className="text-xs text-muted-foreground mb-1">Available: {item.qty}</p>
+                            <div className="flex items-center justify-center gap-1">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => handleQtyChange(item, -1)}
+                                disabled={cartQty === 0}
+                              >
+                                <Minus className="h-3 w-3" />
+                              </Button>
+                              <span className="w-10 text-center text-sm font-semibold">{cartQty}</span>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => handleQtyChange(item, 1)}
+                                disabled={cartQty >= item.qty}
+                              >
+                                <Plus className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </CardContent>
                   </Card>
                 );
