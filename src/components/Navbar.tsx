@@ -17,8 +17,8 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
       <div className="flex h-14 sm:h-16 items-center justify-between px-3 sm:px-6">
         <div className="flex items-center gap-3 sm:gap-6">
           <div className="flex items-center gap-1.5 sm:gap-2 text-base sm:text-lg shrink-0">
-            <img src={APP_LOGO_URL} alt={APP_NAME} className="h-7 w-7 sm:h-8 sm:w-8 rounded" />
-            <span className="font-medium">ReqEase</span>
+            <img src={logoImg} alt={APP_NAME} className="h-7 w-7 sm:h-8 sm:w-8 rounded" />
+            <span className="font-medium">SHAP ReqEase</span>
           </div>
           <nav className="flex gap-0.5 sm:gap-1">
             <button

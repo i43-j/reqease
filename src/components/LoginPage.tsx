@@ -12,7 +12,7 @@ export function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-4">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary overflow-hidden">
-            <img src={APP_LOGO_URL} alt={APP_NAME} className="h-12 w-12" />
+            <img src={logoImg} alt={APP_NAME} className="h-12 w-12" />
           </div>
           <CardTitle className="text-2xl">{APP_NAME}</CardTitle>
           <CardDescription>
