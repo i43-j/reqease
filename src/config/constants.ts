@@ -77,6 +77,7 @@ export const DB = {
     bookingDate: "booking_date",
     startTime: "start_time",
     endTime: "end_time",
+    reason: "reason",
   },
 
   // --- Transaction items log columns ---
