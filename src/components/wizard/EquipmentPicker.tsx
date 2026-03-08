@@ -109,7 +109,7 @@ export function EquipmentPicker() {
       </div>
 
       {/* Search */}
-      <div className="relative max-w-xl mx-auto">
+      <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           value={search}
@@ -163,7 +163,7 @@ export function EquipmentPicker() {
               No items found.
             </div>
           ) : (
-            <div className="grid gap-3 grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {filtered.map(item => {
                 const cartQty = getCartQty(item.id);
                 const inCart = cartQty > 0;
