@@ -5,6 +5,7 @@ interface StepIndicatorProps {
   currentStep: number;
 }
 
+/** Horizontal step progress indicator showing numbered circles, labels, and connecting lines. */
 export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
   return (
     <div className="flex items-center justify-center w-full px-2 sm:px-4 py-4 sm:py-6">

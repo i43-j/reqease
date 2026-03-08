@@ -12,6 +12,7 @@ import { Minus, Plus, ArrowLeft, ShoppingCart, Loader2, Search, CheckCircle2 } f
 
 type TabKey = "equipment" | "chemicals" | "materials";
 
+/** Equipment/chemicals/materials picker with search, category tabs, quantity controls, and cart sidebar. For Route C, filters by selected room. */
 export function EquipmentPicker() {
   const { state, addToCart, updateCartQuantity, removeFromCart, setStep } = useBooking();
   const [items, setItems] = useState<InventoryItem[]>([]);

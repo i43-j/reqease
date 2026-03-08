@@ -1,5 +1,9 @@
+/**
+ * Central configuration file. All Supabase URLs, DB schema names, room definitions,
+ * booking routes, and time constraints are defined here for easy modification.
+ */
+
 // ========== SUPABASE ==========
-// Replace these with your actual Supabase project values
 export const SUPABASE_URL = "https://hvwhlouzjyswylfqjwhl.supabase.co";
 export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2d2hsb3V6anlzd3lsZnFqd2hsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzQ0NjMsImV4cCI6MjA4NTgxMDQ2M30.6Nh8p0XtyYeqB-vTsso3L26Ky7qUhsx1kH2g05T9l9o";
 

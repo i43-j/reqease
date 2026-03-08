@@ -17,6 +17,7 @@ const descriptions: Record<BookingRoute, string> = {
   C: "Reserve a room and borrow items from that room's inventory.",
 };
 
+/** Step 0: Route selection screen. User picks between Room (A), Equipment (B), or Both (C). Resets wizard state on selection. */
 export function RouteSelect() {
   const { setRoute, setStep, reset } = useBooking();
 

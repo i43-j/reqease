@@ -5,6 +5,7 @@ import { APP_NAME } from "@/config/constants";
 import { isAdmin } from "@/config/adminList";
 import logoImg from "@/assets/logo.png";
 
+/** Available top-level pages in the app. */
 export type AppPage = "home" | "requests" | "review";
 
 interface NavbarProps {
@@ -12,6 +13,7 @@ interface NavbarProps {
   onNavigate: (page: AppPage) => void;
 }
 
+/** Sticky top navigation bar with logo, page tabs, and sign-out button. Shows Review tab for admins only. */
 export function Navbar({ activePage, onNavigate }: NavbarProps) {
   const { user, signOut } = useAuth();
   const email = user?.email ?? "";

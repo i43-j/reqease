@@ -8,6 +8,7 @@ import { RequestsPage } from "@/components/RequestsPage";
 import { ReviewPage } from "@/components/ReviewPage";
 import { Loader2 } from "lucide-react";
 
+/** Inner app shell. Gates on auth, then renders Navbar + active page (Home/Requests/Review). */
 function AppContent() {
   const { user, loading } = useAuth();
   const [activePage, setActivePage] = useState<AppPage>("home");
@@ -34,6 +35,7 @@ function AppContent() {
   );
 }
 
+/** Root page component. Wraps everything in AuthProvider. */
 export default function Index() {
   return (
     <AuthProvider>

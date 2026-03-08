@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, FlaskConical } from "lucide-react";
 import { motion } from "framer-motion";
 
+/** Room selection step. Displays available lab rooms as cards and requires a reason/purpose before continuing. */
 export function RoomSelect() {
   const { state, setRoom, setRoomReason, setStep } = useBooking();
 

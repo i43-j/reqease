@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 
+/** Final wizard step showing a success message with a "Book Another" button that resets the wizard. */
 export function Success() {
   const { reset } = useBooking();
 
