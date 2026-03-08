@@ -123,7 +123,7 @@ export function RequestsPage() {
   const [transactions, setTransactions] = useState<TxWithItems[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const email = user?.email ?? "guest@shap.edu.ph";
+  const email = user?.email ?? "";
 
   useEffect(() => {
     fetchTransactions();
