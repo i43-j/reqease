@@ -25,7 +25,7 @@ export function RouteSelect() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)] space-y-8 overflow-hidden">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)] -mt-12 space-y-8 overflow-hidden">
       <div className="text-center space-y-2">
         <h2 className="text-4xl font-bold tracking-tight">What would you like to do?</h2>
         <p className="text-lg text-muted-foreground">Select a request type to get started</p>
