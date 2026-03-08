@@ -25,12 +25,12 @@ export function RouteSelect() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)] -mt-12 space-y-8 overflow-hidden">
-      <div className="text-center space-y-2">
-        <h2 className="text-4xl font-bold tracking-tight">What would you like to do?</h2>
-        <p className="text-lg text-muted-foreground">Select a request type to get started</p>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-5rem)] py-6 space-y-6 sm:space-y-8">
+      <div className="text-center space-y-2 px-4">
+        <h2 className="text-2xl sm:text-4xl font-bold tracking-tight">What would you like to do?</h2>
+        <p className="text-sm sm:text-lg text-muted-foreground">Select a request type to get started</p>
       </div>
-      <div className="grid gap-6 md:grid-cols-3 w-full max-w-5xl mx-auto px-4 items-stretch">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-3 w-full max-w-5xl mx-auto px-4 items-stretch">
         {(["A", "B", "C"] as BookingRoute[]).map((route, i) => (
           <motion.div
             key={route}
@@ -43,12 +43,12 @@ export function RouteSelect() {
               className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group w-full flex"
               onClick={() => handleSelect(route)}
             >
-              <CardContent className="flex flex-col items-center gap-4 p-8 text-center w-full h-full">
-                <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  {icons[route]}
+              <CardContent className="flex flex-col items-center gap-3 sm:gap-4 p-5 sm:p-8 text-center w-full h-full">
+                <div className="flex h-16 w-16 sm:h-24 sm:w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  {React.cloneElement(icons[route] as React.ReactElement, { className: "h-8 w-8 sm:h-14 sm:w-14" })}
                 </div>
-                <h3 className="font-bold text-2xl min-h-16 flex items-center text-center">{ROUTE_LABELS[route]}</h3>
-                <p className="text-base text-muted-foreground leading-relaxed">{descriptions[route]}</p>
+                <h3 className="font-bold text-lg sm:text-2xl">{ROUTE_LABELS[route]}</h3>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{descriptions[route]}</p>
               </CardContent>
             </Card>
           </motion.div>
