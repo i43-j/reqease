@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useBooking } from "@/hooks/useBooking";
 import { supabase } from "@/lib/supabase";
 import type { InventoryItem, CartItem } from "@/types/booking";
-import { STORAGE_BASE_URL } from "@/config/constants";
+import { STORAGE_BASE_URL, DB } from "@/config/constants";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
