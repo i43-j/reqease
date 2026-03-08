@@ -27,25 +27,26 @@ export function RoomSelect() {
         </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
         {ROOMS.map((room, i) => (
           <motion.div
             key={room.code}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
+            className="flex"
           >
             <Card
-              className={`cursor-pointer transition-all ${
+              className={`cursor-pointer transition-all w-full flex ${
                 state.room === room.code
                   ? "border-primary ring-2 ring-primary shadow-md"
                   : "hover:border-primary/50"
               }`}
               onClick={() => setRoom(room.code as RoomCode)}
             >
-              <CardContent className="flex items-center gap-3 p-4">
+              <CardContent className="flex items-center gap-3 p-4 w-full">
                 <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors ${
                     state.room === room.code
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted text-muted-foreground"
@@ -53,10 +54,7 @@ export function RoomSelect() {
                 >
                   <FlaskConical className="h-5 w-5" />
                 </div>
-                <div>
-                  <p className="font-semibold text-sm">{room.name}</p>
-                  <p className="text-xs text-muted-foreground">{room.code}</p>
-                </div>
+                <p className="font-semibold text-sm">{room.name}</p>
               </CardContent>
             </Card>
           </motion.div>
