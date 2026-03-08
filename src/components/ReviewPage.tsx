@@ -240,6 +240,19 @@ export function ReviewPage() {
           : tx
       )
     );
+
+    // Send webhook when approved
+    if (newStatus === DB.statuses.approved) {
+      try {
+        await fetch(N8N_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ transaction_id: txId }),
+        });
+      } catch (e) {
+        console.error("Webhook failed:", e);
+      }
+    }
   };
 
   const filter = (statuses: string[]) =>
