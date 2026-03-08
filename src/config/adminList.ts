@@ -1,5 +1,6 @@
 const ADMIN_EMAILS: string[] = [
-  "guest@shap.edu.ph",
+  // Add admin emails here, e.g.:
+  // "admin@shap.edu.ph",
 ];
 
 export function isAdmin(email: string | undefined): boolean {

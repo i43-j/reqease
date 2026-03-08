@@ -67,7 +67,7 @@ export function Confirmation() {
   };
 
   const handleSubmit = async () => {
-    const email = user?.email ?? "guest@shap.edu.ph";
+    const email = user?.email ?? "";
     setSubmitting(true);
 
     try {
