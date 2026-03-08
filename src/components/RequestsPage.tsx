@@ -119,7 +119,7 @@ export function RequestsPage() {
     const { data: txData, error: txError } = await supabase
       .from(DB.tables.transactionLog)
       .select("*")
-      .eq(DB.txCols.userEmail, user!.email!)
+      .eq(DB.txCols.userEmail, email)
       .order(DB.txCols.timestamp, { ascending: false });
 
     if (txError || !txData) {
