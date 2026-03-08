@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Loader2, Inbox } from "lucide-react";
 import { format } from "date-fns";
-import { ROOMS, DB, APP_NAME } from "@/config/constants";
+import { ROOMS, DB, APP_NAME, N8N_WEBHOOK_URL } from "@/config/constants";
 import type { TransactionLog, TransactionItemLog, InventoryItem } from "@/types/booking";
 import { toast } from "sonner";
 
