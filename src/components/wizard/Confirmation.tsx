@@ -110,7 +110,7 @@ export function Confirmation() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            to: user.email,
+            to: email,
             subject: `${APP_NAME} Booking Receipt — Transaction #${txId}`,
             html: receiptHTML,
             transaction_id: txId,
