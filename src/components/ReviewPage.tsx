@@ -335,9 +335,6 @@ export function ReviewPage() {
             <AlertDialogDescription>
               Are you sure you want to change Transaction #{pendingChange?.txId} to{" "}
               <span className="font-semibold">{pendingChange?.newStatus}</span>?
-              {pendingChange?.newStatus === DB.statuses.approved && (
-                <span className="block mt-1 text-xs">This will also trigger a webhook notification.</span>
-              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
