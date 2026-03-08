@@ -14,6 +14,7 @@ interface NavbarProps {
 
 export function Navbar({ activePage, onNavigate }: NavbarProps) {
   const { user, signOut } = useAuth();
+  const email = user?.email ?? "guest@shap.edu.ph";
 
   return (
     <header className="sticky top-0 z-50 border-b bg-primary text-primary-foreground">
@@ -44,7 +45,7 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
             >
               Requests
             </button>
-            {isAdmin(user?.email) && (
+            {isAdmin(email) && (
               <button
                 onClick={() => onNavigate("review")}
                 className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
