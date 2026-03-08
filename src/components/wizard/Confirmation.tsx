@@ -50,7 +50,7 @@ export function Confirmation() {
           ${state.roomReason ? `<p><strong>Reason:</strong> ${state.roomReason}</p>` : ""}
           <p><strong>Date:</strong> ${state.bookingDate ? format(state.bookingDate, "PPPP") : ""}</p>
           <p><strong>Time:</strong> ${state.startTime} – ${state.endTime}</p>
-          <p><strong>Email:</strong> ${user?.email}</p>
+          <p><strong>Email:</strong> ${user?.email ?? "guest@shap.edu.ph"}</p>
           <p><strong>Status:</strong> <span style="background:#fcd802;padding:2px 8px;border-radius:4px;font-size:13px;">${DB.statuses.dueForApproval}</span></p>
           ${
             state.cart.length > 0
