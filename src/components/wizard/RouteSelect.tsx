@@ -25,12 +25,12 @@ export function RouteSelect() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-5rem)] py-8 space-y-10">
-      <div className="text-center space-y-3">
-        <h2 className="text-5xl font-bold tracking-tight">What would you like to do?</h2>
-        <p className="text-xl text-muted-foreground">Select a request type to get started</p>
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)] space-y-8 overflow-hidden">
+      <div className="text-center space-y-2">
+        <h2 className="text-4xl font-bold tracking-tight">What would you like to do?</h2>
+        <p className="text-lg text-muted-foreground">Select a request type to get started</p>
       </div>
-      <div className="grid gap-8 md:grid-cols-3 w-full max-w-6xl mx-auto px-4">
+      <div className="grid gap-6 md:grid-cols-3 w-full max-w-5xl mx-auto px-4">
         {(["A", "B", "C"] as BookingRoute[]).map((route, i) => (
           <motion.div
             key={route}
@@ -43,7 +43,7 @@ export function RouteSelect() {
               className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group w-full flex"
               onClick={() => handleSelect(route)}
             >
-              <CardContent className="flex flex-col items-center justify-center gap-6 p-12 text-center w-full min-h-[280px]">
+              <CardContent className="flex flex-col items-center justify-center gap-4 p-8 text-center w-full">
                 <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   {icons[route]}
                 </div>
