@@ -96,10 +96,22 @@ export function DateTimePicker() {
             </Select>
           </div>
 
-          {state.startTime && state.endTime && state.startTime >= state.endTime && (
-            <p className="text-sm text-destructive">End time must be after start time.</p>
-          )}
-        </div>
+           {state.startTime && state.endTime && state.startTime >= state.endTime && (
+             <p className="text-sm text-destructive">End time must be after start time.</p>
+           )}
+
+           {needsReason && (
+             <div className="space-y-2">
+               <label className="text-sm font-medium">Reason for Borrowing</label>
+               <Textarea
+                 placeholder="e.g. Physics experiment on projectile motion"
+                 value={state.roomReason}
+                 onChange={e => setRoomReason(e.target.value)}
+                 rows={3}
+               />
+             </div>
+           )}
+         </div>
       </div>
 
       <div className="flex justify-end">
