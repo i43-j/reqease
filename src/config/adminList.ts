@@ -1,6 +1,5 @@
 const ADMIN_EMAILS: string[] = [
-  // Add admin emails here, e.g.:
-  // "admin@shap.edu.ph",
+  "workingforthebigg@gmail.com",
 ];
 
 /** Returns true if the given email is in the admin list. Controls visibility of the Review tab. */
