@@ -200,7 +200,7 @@ export function EquipmentPicker() {
                       />
                     </div>
                     <CardContent className="p-3 flex flex-col flex-1">
-                      <h4 className="font-semibold text-sm leading-tight line-clamp-2 min-h-[2.5rem]">{item.stock_description}</h4>
+                      <h4 className="font-semibold text-sm leading-tight">{item.stock_description}</h4>
                       <p className="text-xs text-muted-foreground line-clamp-2 min-h-[1rem] mt-1">
                         {item.notes ?? "\u00A0"}
                       </p>
