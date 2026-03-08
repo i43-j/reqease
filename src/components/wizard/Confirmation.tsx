@@ -73,30 +73,30 @@ export function Confirmation() {
     try {
       // 1. Insert transaction_log
       const { data: txData, error: txError } = await supabase
-        .from("transaction_log")
+        .from(DB.tables.transactionLog)
         .insert({
-          lab: state.room ?? null,
-          user_email: user.email,
-          status: "DUE FOR APPROVAL",
-          booking_date: state.bookingDate ? format(state.bookingDate, "yyyy-MM-dd") : null,
-          start_time: state.startTime,
-          end_time: state.endTime,
+          [DB.txCols.lab]: state.room ?? null,
+          [DB.txCols.userEmail]: user.email,
+          [DB.txCols.status]: DB.statuses.dueForApproval,
+          [DB.txCols.bookingDate]: state.bookingDate ? format(state.bookingDate, "yyyy-MM-dd") : null,
+          [DB.txCols.startTime]: state.startTime,
+          [DB.txCols.endTime]: state.endTime,
         })
-        .select("transaction_log")
+        .select(DB.txCols.id)
         .single();
 
       if (txError) throw txError;
-      const txId = txData.transaction_log;
+      const txId = txData[DB.txCols.id];
 
       // 2. Insert transaction_items_log
       if (state.cart.length > 0) {
         const itemRows = state.cart.map(c => ({
-          transaction_id: txId,
-          item_id: c.item.id,
-          qty: c.quantity,
+          [DB.txItemsCols.transactionId]: txId,
+          [DB.txItemsCols.itemId]: c.item.id,
+          [DB.txItemsCols.qty]: c.quantity,
         }));
         const { error: itemsError } = await supabase
-          .from("transaction_items_log")
+          .from(DB.tables.transactionItems)
           .insert(itemRows);
         if (itemsError) throw itemsError;
       }
