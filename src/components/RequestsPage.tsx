@@ -18,7 +18,7 @@ const STATUS_GROUPS: Record<string, string[]> = {
 const STATUS_COLORS: Record<string, string> = {
   [DB.statuses.dueForApproval]: "bg-warning text-warning-foreground",
   [DB.statuses.approved]: "bg-success text-success-foreground",
-  [DB.statuses.rejected]: "bg-urgent text-urgent-foreground",
+  [DB.statuses.rejected]: "bg-destructive text-destructive-foreground",
   [DB.statuses.completed]: "bg-primary text-primary-foreground",
 };
 
