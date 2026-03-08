@@ -28,7 +28,7 @@ export function RouteSelect() {
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold">What would you like to do?</h2>
-        <p className="text-muted-foreground mt-1">Select a booking type to get started</p>
+        <p className="text-muted-foreground mt-1">Select a request type to get started</p>
       </div>
       <div className="grid gap-4 md:grid-cols-3 max-w-3xl mx-auto">
         {(["A", "B", "C"] as BookingRoute[]).map((route, i) => (

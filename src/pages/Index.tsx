@@ -8,7 +8,7 @@ import { RequestsPage } from "@/components/RequestsPage";
 import { Loader2 } from "lucide-react";
 
 function AppContent() {
-  const { user, loading } = useAuth();
+  const { loading } = useAuth();
   const [activePage, setActivePage] = useState<"home" | "requests">("home");
 
   if (loading) {
@@ -19,7 +19,8 @@ function AppContent() {
     );
   }
 
-  if (!user) return <LoginPage />;
+  // Login page disabled for now
+  // if (!user) return <LoginPage />;
 
   return (
     <BookingProvider>

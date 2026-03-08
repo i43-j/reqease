@@ -10,6 +10,11 @@ export const N8N_WEBHOOK_URL = "https://YOUR_N8N_INSTANCE.app.n8n.cloud/webhook/
 // ========== SUPABASE STORAGE ==========
 export const STORAGE_BASE_URL = "https://hvwhlouzjyswylfqjwhl.supabase.co/storage/v1/object/public/images";
 
+// ========== BRANDING ==========
+export const APP_NAME = "REQEASE";
+// Replace this with your actual logo URL
+export const APP_LOGO_URL = "/placeholder.svg";
+
 // ========== ROOMS ==========
 export const ROOMS = [
   { code: "B_JHS", name: "Junior High School Biology Lab" },

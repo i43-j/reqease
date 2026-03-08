@@ -1,7 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { FlaskConical } from "lucide-react";
+import { APP_NAME, APP_LOGO_URL } from "@/config/constants";
 
 export function LoginPage() {
   const { signInWithGoogle, loading } = useAuth();
@@ -10,10 +10,10 @@ export function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-muted p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-4">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-            <FlaskConical className="h-8 w-8" />
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary overflow-hidden">
+            <img src={APP_LOGO_URL} alt={APP_NAME} className="h-12 w-12" />
           </div>
-          <CardTitle className="text-2xl">SciLab Booking System</CardTitle>
+          <CardTitle className="text-2xl">{APP_NAME}</CardTitle>
           <CardDescription>
             Sign in with your SHAP Google account to book science lab rooms and equipment.
           </CardDescription>

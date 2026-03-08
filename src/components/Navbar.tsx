@@ -1,6 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { FlaskConical, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
+import { APP_NAME, APP_LOGO_URL } from "@/config/constants";
 
 interface NavbarProps {
   activePage: "home" | "requests";
@@ -15,8 +16,8 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2 font-bold text-lg">
-            <FlaskConical className="h-6 w-6" />
-            <span>SciLab Booking</span>
+            <img src={APP_LOGO_URL} alt={APP_NAME} className="h-8 w-8 rounded" />
+            <span>{APP_NAME}</span>
           </div>
           <nav className="flex gap-1">
             <button
