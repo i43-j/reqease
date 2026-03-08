@@ -2,9 +2,10 @@ import { useState } from "react";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { BookingProvider } from "@/hooks/useBooking";
 import { LoginPage } from "@/components/LoginPage";
-import { Navbar } from "@/components/Navbar";
+import { Navbar, type AppPage } from "@/components/Navbar";
 import { BookingWizard } from "@/components/wizard/BookingWizard";
 import { RequestsPage } from "@/components/RequestsPage";
+import { ReviewPage } from "@/components/ReviewPage";
 import { Loader2 } from "lucide-react";
 
 function AppContent() {
