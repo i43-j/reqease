@@ -66,7 +66,7 @@ export const DB = {
   // --- Category filter values ---
   // Items with these categories go to "Chemicals" / "Materials" tabs;
   // everything else goes to "Equipment" tab
-  chemicalCategory: "CHEMICAL",
+  chemicalCategory: "CHEMICALS",
   consumableCategory: "CONSUMABLE",
 
   // --- Transaction log columns ---
