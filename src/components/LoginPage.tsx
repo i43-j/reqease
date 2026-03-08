@@ -1,7 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { APP_NAME, APP_LOGO_URL } from "@/config/constants";
+import { APP_NAME } from "@/config/constants";
+import logoImg from "@/assets/logo.png";
 
 export function LoginPage() {
   const { signInWithGoogle, loading } = useAuth();
