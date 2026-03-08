@@ -30,7 +30,7 @@ export function RouteSelect() {
         <h2 className="text-4xl font-bold tracking-tight">What would you like to do?</h2>
         <p className="text-lg text-muted-foreground">Select a request type to get started</p>
       </div>
-      <div className="grid gap-6 md:grid-cols-3 w-full max-w-5xl mx-auto px-4">
+      <div className="grid gap-6 md:grid-cols-3 w-full max-w-5xl mx-auto px-4 items-stretch">
         {(["A", "B", "C"] as BookingRoute[]).map((route, i) => (
           <motion.div
             key={route}
@@ -43,11 +43,13 @@ export function RouteSelect() {
               className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group w-full flex"
               onClick={() => handleSelect(route)}
             >
-              <CardContent className="flex flex-col items-center justify-center gap-4 p-8 text-center w-full">
-                <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  {icons[route]}
+              <CardContent className="flex flex-col items-center justify-between gap-4 p-8 text-center w-full h-full">
+                <div className="flex-1 flex flex-col items-center justify-center gap-4">
+                  <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    {icons[route]}
+                  </div>
+                  <h3 className="font-bold text-2xl">{ROUTE_LABELS[route]}</h3>
                 </div>
-                <h3 className="font-bold text-2xl">{ROUTE_LABELS[route]}</h3>
                 <p className="text-base text-muted-foreground leading-relaxed">{descriptions[route]}</p>
               </CardContent>
             </Card>
