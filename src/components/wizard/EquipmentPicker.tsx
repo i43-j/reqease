@@ -229,6 +229,7 @@ export function EquipmentPicker() {
                             </Button>
                           </div>
                         </>
+                      )}
                     </CardContent>
                   </Card>
                 );
