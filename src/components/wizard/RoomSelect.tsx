@@ -11,7 +11,7 @@ export function RoomSelect() {
 
   const handleContinue = () => {
     if (!state.room || !state.roomReason.trim()) return;
-    const nextStep = state.route === "C" ? 2 : 3;
+    const nextStep = state.route === "C" ? 2 : 2;
     setStep(nextStep);
   };
 
