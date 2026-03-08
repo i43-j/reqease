@@ -43,7 +43,7 @@ export function BookingWizard() {
   const steps = getSteps(state.route);
 
   return (
-    <div className="container max-w-5xl py-6 space-y-2">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-2">
       {state.route && step > 0 && step < steps.length - 1 && (
         <StepIndicator steps={steps} currentStep={step} />
       )}
