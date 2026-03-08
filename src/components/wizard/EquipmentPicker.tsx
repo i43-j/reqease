@@ -102,7 +102,7 @@ export function EquipmentPicker() {
           <h2 className="text-2xl font-bold">Select Items</h2>
           <p className="text-muted-foreground text-sm">
             {state.route === "C" && state.room
-              ? `Showing inventory for ${state.room}`
+              ? `Showing inventory for ${ROOMS.find(r => r.code === state.room)?.name ?? state.room}`
               : "Showing all available inventory"}
           </p>
         </div>
