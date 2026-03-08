@@ -50,7 +50,7 @@ export function Confirmation() {
           ${state.roomReason ? `<p><strong>Reason:</strong> ${state.roomReason}</p>` : ""}
           <p><strong>Date:</strong> ${state.bookingDate ? format(state.bookingDate, "PPPP") : ""}</p>
           <p><strong>Time:</strong> ${state.startTime} – ${state.endTime}</p>
-          <p><strong>Email:</strong> ${user?.email}</p>
+          <p><strong>Email:</strong> ${user?.email ?? "guest@shap.edu.ph"}</p>
           <p><strong>Status:</strong> <span style="background:#fcd802;padding:2px 8px;border-radius:4px;font-size:13px;">${DB.statuses.dueForApproval}</span></p>
           ${
             state.cart.length > 0
@@ -67,10 +67,7 @@ export function Confirmation() {
   };
 
   const handleSubmit = async () => {
-    if (!user?.email) {
-      toast.error("You must be logged in to submit a booking.");
-      return;
-    }
+    const email = user?.email ?? "guest@shap.edu.ph";
     setSubmitting(true);
 
     try {
@@ -79,7 +76,7 @@ export function Confirmation() {
         .from(DB.tables.transactionLog)
         .insert({
           [DB.txCols.lab]: state.room ?? null,
-          [DB.txCols.userEmail]: user.email,
+          [DB.txCols.userEmail]: email,
           [DB.txCols.status]: DB.statuses.dueForApproval,
           [DB.txCols.bookingDate]: state.bookingDate ? format(state.bookingDate, "yyyy-MM-dd") : null,
           [DB.txCols.startTime]: state.startTime,
@@ -113,7 +110,7 @@ export function Confirmation() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            to: user.email,
+            to: email,
             subject: `${APP_NAME} Booking Receipt — Transaction #${txId}`,
             html: receiptHTML,
             transaction_id: txId,
