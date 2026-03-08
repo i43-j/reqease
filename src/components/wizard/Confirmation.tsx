@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useBooking } from "@/hooks/useBooking";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabase";
-import { N8N_WEBHOOK_URL, ROUTE_LABELS, ROOMS } from "@/config/constants";
+import { N8N_WEBHOOK_URL, ROUTE_LABELS, ROOMS, DB, APP_NAME } from "@/config/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
