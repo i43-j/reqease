@@ -106,8 +106,9 @@ export function RequestsPage() {
   const [transactions, setTransactions] = useState<TxWithItems[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const email = user?.email ?? "guest@shap.edu.ph";
+
   useEffect(() => {
-    if (!user?.email) return;
     fetchTransactions();
   }, [user]);
 
@@ -118,7 +119,7 @@ export function RequestsPage() {
     const { data: txData, error: txError } = await supabase
       .from(DB.tables.transactionLog)
       .select("*")
-      .eq(DB.txCols.userEmail, user!.email!)
+      .eq(DB.txCols.userEmail, email)
       .order(DB.txCols.timestamp, { ascending: false });
 
     if (txError || !txData) {
