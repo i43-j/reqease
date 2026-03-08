@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/config/constants";
 import logoImg from "@/assets/logo.png";
 
+/** Split-screen login page with Google GIS sign-in. Restricted to @shap.edu.ph accounts. */
 export function LoginPage() {
   const { signInWithGoogle, loading } = useAuth();
 

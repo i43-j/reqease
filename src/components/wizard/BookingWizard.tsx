@@ -38,6 +38,7 @@ function getStepComponent(route: string | null, step: number) {
   return <Success />;
 }
 
+/** Main booking wizard container. Routes to the correct step component based on selected route (A/B/C) and current step index. */
 export function BookingWizard() {
   const { state, step } = useBooking();
   const steps = getSteps(state.route);

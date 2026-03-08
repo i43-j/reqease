@@ -35,6 +35,7 @@ function AppContent() {
   );
 }
 
+/** Root page component. Wraps everything in AuthProvider. */
 export default function Index() {
   return (
     <AuthProvider>

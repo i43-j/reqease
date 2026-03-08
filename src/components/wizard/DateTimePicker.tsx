@@ -20,6 +20,7 @@ function generateTimeOptions(): string[] {
 
 const TIME_OPTIONS = generateTimeOptions();
 
+/** Date and time selection step. Calendar restricted to weekdays; time slots from 7 AM to 4 PM. Route B also collects a borrowing reason. */
 export function DateTimePicker() {
   const { state, setBookingDate, setStartTime, setEndTime, setRoomReason, setStep } = useBooking();
 
