@@ -75,6 +75,7 @@ export function Confirmation() {
       const { data: txData, error: txError } = await supabase
         .from(DB.tables.transactionLog)
         .insert({
+          [DB.txCols.timestamp]: new Date().toISOString(),
           [DB.txCols.lab]: state.room ?? null,
           [DB.txCols.userEmail]: email,
           [DB.txCols.status]: DB.statuses.dueForApproval,
