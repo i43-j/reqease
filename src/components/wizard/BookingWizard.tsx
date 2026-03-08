@@ -44,7 +44,7 @@ export function BookingWizard() {
 
   return (
     <div className="container max-w-5xl py-6 space-y-2">
-      {state.route && step < steps.length - 1 && (
+      {state.route && step > 0 && step < steps.length - 1 && (
         <StepIndicator steps={steps} currentStep={step} />
       )}
       {getStepComponent(state.route, step)}
