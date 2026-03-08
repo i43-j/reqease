@@ -50,7 +50,7 @@ export function EquipmentPicker() {
     if (activeTab === "chemicals") filtered = items.filter(i => i.category === DB.chemicalCategory);
     else if (activeTab === "materials") filtered = items.filter(i => i.category === DB.consumableCategory);
     else if (!activeCategory) filtered = items.filter(i => i.category !== DB.chemicalCategory && i.category !== DB.consumableCategory);
-    else filtered = items.filter(i => i.category === activeCategory);
+    else filtered = items.filter(i => i.category === activeCategory && i.category !== DB.chemicalCategory && i.category !== DB.consumableCategory);
 
     if (search.trim()) {
       const q = search.toLowerCase();
