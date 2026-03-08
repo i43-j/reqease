@@ -167,8 +167,22 @@ export function EquipmentPicker() {
               {filtered.map(item => {
                 const cartQty = getCartQty(item.id);
                 const inCart = cartQty > 0;
+                const isChemical = activeTab === "chemicals";
+
+                const handleToggleChemical = () => {
+                  if (inCart) {
+                    removeFromCart(item.id);
+                  } else {
+                    addToCart({ item, quantity: 1 });
+                  }
+                };
+
                 return (
-                  <Card key={item.id} className={`overflow-hidden transition-all relative ${inCart ? "ring-2 ring-primary" : ""}`}>
+                  <Card
+                    key={item.id}
+                    className={`overflow-hidden transition-all relative ${inCart ? "ring-2 ring-primary" : ""} ${isChemical ? "cursor-pointer" : ""}`}
+                    onClick={isChemical ? handleToggleChemical : undefined}
+                  >
                     {inCart && (
                       <div className="absolute top-2 right-2 z-10">
                         <CheckCircle2 className="h-5 w-5 text-primary fill-primary/20" />
@@ -190,28 +204,36 @@ export function EquipmentPicker() {
                       {item.notes && (
                         <p className="text-xs text-muted-foreground line-clamp-2">{item.notes}</p>
                       )}
-                      <p className="text-xs text-muted-foreground">Available: {item.qty}</p>
-                      <div className="flex items-center justify-center gap-1 pt-1">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8"
-                          onClick={() => handleQtyChange(item, -1)}
-                          disabled={cartQty === 0}
-                        >
-                          <Minus className="h-3 w-3" />
-                        </Button>
-                        <span className="w-10 text-center text-sm font-semibold">{cartQty}</span>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8"
-                          onClick={() => handleQtyChange(item, 1)}
-                          disabled={cartQty >= item.qty}
-                        >
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>
+                      {isChemical ? (
+                        <p className={`text-xs font-medium text-center pt-1 ${inCart ? "text-primary" : "text-muted-foreground"}`}>
+                          {inCart ? "✓ Selected" : "Tap to select"}
+                        </p>
+                      ) : (
+                        <>
+                          <p className="text-xs text-muted-foreground">Available: {item.qty}</p>
+                          <div className="flex items-center justify-center gap-1 pt-1">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => handleQtyChange(item, -1)}
+                              disabled={cartQty === 0}
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="w-10 text-center text-sm font-semibold">{cartQty}</span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => handleQtyChange(item, 1)}
+                              disabled={cartQty >= item.qty}
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </>
+                      )}
                     </CardContent>
                   </Card>
                 );
