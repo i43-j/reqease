@@ -6,20 +6,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Inbox } from "lucide-react";
 import { format } from "date-fns";
-import { ROUTE_LABELS, ROOMS } from "@/config/constants";
+import { ROUTE_LABELS, ROOMS, DB } from "@/config/constants";
 import type { TransactionLog } from "@/types/booking";
 
 const STATUS_GROUPS: Record<string, string[]> = {
-  pending: ["DUE FOR APPROVAL"],
-  resolved: ["APPROVED", "REJECTED"],
-  completed: ["COMPLETED"],
+  pending: [DB.statuses.dueForApproval],
+  resolved: [DB.statuses.approved, DB.statuses.rejected],
+  completed: [DB.statuses.completed],
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  "DUE FOR APPROVAL": "bg-warning text-warning-foreground",
-  APPROVED: "bg-success text-success-foreground",
-  REJECTED: "bg-urgent text-urgent-foreground",
-  COMPLETED: "bg-primary text-primary-foreground",
+  [DB.statuses.dueForApproval]: "bg-warning text-warning-foreground",
+  [DB.statuses.approved]: "bg-success text-success-foreground",
+  [DB.statuses.rejected]: "bg-urgent text-urgent-foreground",
+  [DB.statuses.completed]: "bg-primary text-primary-foreground",
 };
 
 function EmptyState({ message }: { message: string }) {
