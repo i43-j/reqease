@@ -78,6 +78,13 @@ function ReceiptCard({ tx }: { tx: TxWithItems }) {
           <span className="font-medium">{format(new Date(tx.timestamp), "PPp")}</span>
         </div>
 
+        {tx.reason && (
+          <div>
+            <span className="text-muted-foreground">Reason:</span>{" "}
+            <span className="font-medium">{tx.reason}</span>
+          </div>
+        )}
+
         {tx.items.length > 0 && (
           <>
             <Separator />
