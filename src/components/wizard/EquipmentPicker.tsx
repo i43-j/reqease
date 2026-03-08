@@ -27,16 +27,16 @@ export function EquipmentPicker() {
 
   const fetchItems = async () => {
     setLoading(true);
-    let query = supabase.from("items").select("*");
+    let query = supabase.from(DB.tables.items).select("*");
     if (state.route === "C" && state.room) {
-      query = query.eq("lab", state.room);
+      query = query.eq(DB.itemsCols.lab, state.room);
     }
     const { data, error } = await query;
     if (!error && data) {
       setItems(data as InventoryItem[]);
       const eqCats = [...new Set(
         data
-          .filter((d: InventoryItem) => d.category !== "CHEMICAL" && d.category !== "CONSUMABLE")
+          .filter((d: InventoryItem) => d.category !== DB.chemicalCategory && d.category !== DB.consumableCategory)
           .map((d: InventoryItem) => d.category)
       )].sort();
       setCategories(eqCats);
