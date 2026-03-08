@@ -9,7 +9,7 @@ import { ReviewPage } from "@/components/ReviewPage";
 import { Loader2 } from "lucide-react";
 
 function AppContent() {
-  const { loading } = useAuth();
+  const { user, loading } = useAuth();
   const [activePage, setActivePage] = useState<AppPage>("home");
 
   if (loading) {
@@ -20,8 +20,7 @@ function AppContent() {
     );
   }
 
-  // Login page disabled for now
-  // if (!user) return <LoginPage />;
+  if (!user) return <LoginPage />;
 
   return (
     <BookingProvider>
