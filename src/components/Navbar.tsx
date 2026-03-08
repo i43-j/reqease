@@ -14,6 +14,7 @@ interface NavbarProps {
 
 export function Navbar({ activePage, onNavigate }: NavbarProps) {
   const { user, signOut } = useAuth();
+  const email = user?.email ?? "guest@shap.edu.ph";
 
   return (
     <header className="sticky top-0 z-50 border-b bg-primary text-primary-foreground">
