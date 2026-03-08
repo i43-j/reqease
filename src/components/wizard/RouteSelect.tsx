@@ -48,7 +48,7 @@ export function RouteSelect() {
                   {icons[route]}
                 </div>
                 <h3 className="font-bold text-2xl min-h-16 flex items-center text-center">{ROUTE_LABELS[route]}</h3>
-                <p className="text-base text-muted-foreground leading-relaxed min-h-14 line-clamp-2">{descriptions[route]}</p>
+                <p className="text-base text-muted-foreground leading-relaxed">{descriptions[route]}</p>
               </CardContent>
             </Card>
           </motion.div>
