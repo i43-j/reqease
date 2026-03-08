@@ -76,7 +76,7 @@ export function Confirmation() {
         .from(DB.tables.transactionLog)
         .insert({
           [DB.txCols.lab]: state.room ?? null,
-          [DB.txCols.userEmail]: user.email,
+          [DB.txCols.userEmail]: email,
           [DB.txCols.status]: DB.statuses.dueForApproval,
           [DB.txCols.bookingDate]: state.bookingDate ? format(state.bookingDate, "yyyy-MM-dd") : null,
           [DB.txCols.startTime]: state.startTime,
