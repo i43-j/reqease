@@ -35,7 +35,8 @@ export function DateTimePicker() {
     return 4; // Route C
   };
 
-  const canContinue = state.bookingDate && state.startTime && state.endTime && state.startTime < state.endTime;
+  const needsReason = state.route === "B";
+  const canContinue = state.bookingDate && state.startTime && state.endTime && state.startTime < state.endTime && (!needsReason || state.roomReason.trim().length > 0);
 
   return (
     <div className="space-y-6">
