@@ -82,6 +82,7 @@ export function Confirmation() {
           [DB.txCols.bookingDate]: state.bookingDate ? format(state.bookingDate, "yyyy-MM-dd") : null,
           [DB.txCols.startTime]: state.startTime,
           [DB.txCols.endTime]: state.endTime,
+          [DB.txCols.reason]: state.roomReason || null,
         })
         .select(DB.txCols.id)
         .single();
