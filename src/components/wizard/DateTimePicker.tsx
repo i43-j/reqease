@@ -21,7 +21,7 @@ function generateTimeOptions(): string[] {
 const TIME_OPTIONS = generateTimeOptions();
 
 export function DateTimePicker() {
-  const { state, setBookingDate, setStartTime, setEndTime, setStep } = useBooking();
+  const { state, setBookingDate, setStartTime, setEndTime, setRoomReason, setStep } = useBooking();
 
   const getPrevStep = () => {
     if (state.route === "A") return 1;
