@@ -5,9 +5,9 @@ import { DoorOpen, Package, Layers } from "lucide-react";
 import { motion } from "framer-motion";
 
 const icons: Record<BookingRoute, React.ReactNode> = {
-  A: <DoorOpen className="h-12 w-12" />,
-  B: <Package className="h-12 w-12" />,
-  C: <Layers className="h-12 w-12" />,
+  A: <DoorOpen className="h-14 w-14" />,
+  B: <Package className="h-14 w-14" />,
+  C: <Layers className="h-14 w-14" />,
 };
 
 const descriptions: Record<BookingRoute, string> = {
@@ -25,29 +25,30 @@ export function RouteSelect() {
   };
 
   return (
-    <div className="space-y-10 py-8">
-      <div className="text-center space-y-2">
-        <h2 className="text-4xl font-bold tracking-tight">What would you like to do?</h2>
-        <p className="text-lg text-muted-foreground">Select a request type to get started</p>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-5rem)] py-8 space-y-10">
+      <div className="text-center space-y-3">
+        <h2 className="text-5xl font-bold tracking-tight">What would you like to do?</h2>
+        <p className="text-xl text-muted-foreground">Select a request type to get started</p>
       </div>
-      <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
+      <div className="grid gap-8 md:grid-cols-3 w-full max-w-6xl mx-auto px-4">
         {(["A", "B", "C"] as BookingRoute[]).map((route, i) => (
           <motion.div
             key={route}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
+            className="flex"
           >
             <Card
-              className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group"
+              className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group w-full flex"
               onClick={() => handleSelect(route)}
             >
-              <CardContent className="flex flex-col items-center gap-4 p-10 text-center">
-                <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              <CardContent className="flex flex-col items-center justify-center gap-6 p-12 text-center w-full min-h-[280px]">
+                <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   {icons[route]}
                 </div>
-                <h3 className="font-semibold text-xl">{ROUTE_LABELS[route]}</h3>
-                <p className="text-sm text-muted-foreground">{descriptions[route]}</p>
+                <h3 className="font-bold text-2xl">{ROUTE_LABELS[route]}</h3>
+                <p className="text-base text-muted-foreground leading-relaxed">{descriptions[route]}</p>
               </CardContent>
             </Card>
           </motion.div>
