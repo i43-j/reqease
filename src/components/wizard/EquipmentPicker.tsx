@@ -258,34 +258,50 @@ export function EquipmentPicker() {
                 <p className="text-sm text-muted-foreground py-4 text-center">No items selected yet.</p>
               ) : (
                 <div className="space-y-2 max-h-[50vh] overflow-y-auto">
-                  {state.cart.map(c => (
-                    <div key={c.item.id} className="flex items-center justify-between gap-2 p-2 rounded-md bg-muted/50">
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium truncate">{c.item.stock_description}</p>
-                        <p className="text-xs text-muted-foreground">Qty: {c.quantity}</p>
+                  {state.cart.map(c => {
+                    const isToggleItem = c.item.category === DB.chemicalCategory || c.item.category === DB.consumableCategory;
+                    return (
+                      <div key={c.item.id} className="flex items-center justify-between gap-2 p-2 rounded-md bg-muted/50">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium truncate">{c.item.stock_description}</p>
+                          {!isToggleItem && (
+                            <p className="text-xs text-muted-foreground">Qty: {c.quantity}</p>
+                          )}
+                        </div>
+                        {isToggleItem ? (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 shrink-0"
+                            onClick={() => removeFromCart(c.item.id)}
+                          >
+                            <Minus className="h-3 w-3" />
+                          </Button>
+                        ) : (
+                          <div className="flex items-center gap-1 shrink-0">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => handleQtyChange(c.item, -1)}
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="w-6 text-center text-sm font-medium">{c.quantity}</span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => handleQtyChange(c.item, 1)}
+                              disabled={c.quantity >= c.item.qty}
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        )}
                       </div>
-                      <div className="flex items-center gap-1 shrink-0">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-7 w-7"
-                          onClick={() => handleQtyChange(c.item, -1)}
-                        >
-                          <Minus className="h-3 w-3" />
-                        </Button>
-                        <span className="w-6 text-center text-sm font-medium">{c.quantity}</span>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-7 w-7"
-                          onClick={() => handleQtyChange(c.item, 1)}
-                          disabled={c.quantity >= c.item.qty}
-                        >
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
 
