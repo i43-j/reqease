@@ -229,7 +229,20 @@ export function EquipmentPicker() {
                             </Button>
                           </div>
                         </>
-                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Cart sidebar */}
+        <div className="hidden md:block w-72 shrink-0 sticky top-24">
+          <Card className="border-border">
+            <CardContent className="p-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
                   <ShoppingCart className="h-4 w-4 text-muted-foreground" />
                   <h3 className="font-semibold text-sm uppercase tracking-wider">Cart Summary</h3>
                 </div>
