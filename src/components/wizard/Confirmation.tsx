@@ -61,7 +61,29 @@ export function Confirmation() {
         if (itemsError) throw itemsError;
       }
 
-      // 3. Fire webhook with receipt
+      // 3. Fire webhooks with receipt + structured data
+      const receiptHtml = buildReceiptHTML(state, email, txId);
+      const structuredData = {
+        transaction_id: txId,
+        user_email: email,
+        booking_type: state.route ? ROUTE_LABELS[state.route] : "",
+        room: state.room,
+        room_name: roomName ?? null,
+        booking_date: state.bookingDate ? format(state.bookingDate, "yyyy-MM-dd") : null,
+        start_time: state.startTime,
+        end_time: state.endTime,
+        reason: state.roomReason || null,
+        status: DB.statuses.dueForApproval,
+        items: state.cart.map((c) => ({
+          id: c.item.id,
+          name: c.item.stock_description,
+          quantity: c.quantity,
+          uom: c.item.uom,
+        })),
+        html: receiptHtml,
+      };
+
+      // Receipt webhook
       try {
         await fetch(N8N_WEBHOOK_URL, {
           method: "POST",
@@ -69,11 +91,19 @@ export function Confirmation() {
           body: JSON.stringify({
             to: email,
             subject: `${APP_NAME} Booking Receipt — Transaction #${txId}`,
-            html: buildReceiptHTML(state, email, txId),
-            transaction_id: txId,
+            ...structuredData,
           }),
         });
-      } catch { console.warn("n8n webhook failed, booking was saved."); }
+      } catch { console.warn("n8n receipt webhook failed, booking was saved."); }
+
+      // Review webhook
+      try {
+        await fetch(N8N_REVIEW_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(structuredData),
+        });
+      } catch { console.warn("n8n review webhook failed, booking was saved."); }
 
       toast.success("Booking submitted successfully!");
       setStep(successStep);
