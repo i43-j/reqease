@@ -15,7 +15,7 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
-import { DB, N8N_WEBHOOK_URL } from "@/config/constants";
+import { DB, N8N_WEBHOOK_URL, ROOMS, ROUTE_LABELS, APP_NAME } from "@/config/constants";
 import { fetchTransactionsWithItems, STATUS_GROUPS, STATUS_COLORS, type TxWithItems } from "@/lib/transactions";
 import { EmptyState, TransactionCard } from "@/components/shared/TransactionCard";
 import { toast } from "sonner";
