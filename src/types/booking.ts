@@ -32,6 +32,7 @@ export interface TransactionItemLog {
   transaction_id: number;
   created_at: string;
   item_id: string;
+  item_name?: string;
   qty: number;
 }
 
