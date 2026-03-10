@@ -3,7 +3,7 @@
  * Adds a status-change dropdown to each transaction card.
  * Fires n8n webhook on approval.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
