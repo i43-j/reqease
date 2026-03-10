@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useBooking } from "@/hooks/useBooking";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabase";
-import { N8N_WEBHOOK_URL, N8N_REVIEW_WEBHOOK_URL, ROUTE_LABELS, ROOMS, DB, APP_NAME } from "@/config/constants";
+import { N8N_REVIEW_WEBHOOK_URL, ROUTE_LABELS, ROOMS, DB, APP_NAME } from "@/config/constants";
 import { buildReceiptHTML } from "@/lib/receipt";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -83,18 +83,7 @@ export function Confirmation() {
         html: receiptHtml,
       };
 
-      // Receipt webhook
-      try {
-        await fetch(N8N_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            to: email,
-            subject: `${APP_NAME} Booking Receipt — Transaction #${txId}`,
-            ...structuredData,
-          }),
-        });
-      } catch { console.warn("n8n receipt webhook failed, booking was saved."); }
+      // Review webhook (receipt webhook fires on approval via ReviewPage)
 
       // Review webhook
       try {

@@ -3,7 +3,7 @@
  * Adds a status-change dropdown to each transaction card.
  * Fires n8n webhook on approval.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,7 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
-import { DB, N8N_WEBHOOK_URL } from "@/config/constants";
+import { DB, N8N_WEBHOOK_URL, ROOMS, ROUTE_LABELS, APP_NAME } from "@/config/constants";
 import { fetchTransactionsWithItems, STATUS_GROUPS, STATUS_COLORS, type TxWithItems } from "@/lib/transactions";
 import { EmptyState, TransactionCard } from "@/components/shared/TransactionCard";
 import { toast } from "sonner";
@@ -62,13 +62,30 @@ export function ReviewPage() {
     );
 
     if (newStatus === DB.statuses.approved) {
-      try {
-        await fetch(N8N_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ transaction_id: txId }),
-        });
-      } catch (e) { console.error("Webhook failed:", e); }
+      const tx = transactions.find((t) => (t[DB.txCols.id as keyof TransactionLog] as number) === txId);
+      if (tx) {
+        const roomName = ROOMS.find((r) => r.code === tx.lab)?.name ?? null;
+        try {
+          await fetch(N8N_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              to: tx.user_email,
+              subject: `${APP_NAME} Booking Approved — Transaction #${txId}`,
+              transaction_id: txId,
+              user_email: tx.user_email,
+              room: tx.lab,
+              room_name: roomName,
+              booking_date: tx.booking_date,
+              start_time: tx.start_time,
+              end_time: tx.end_time,
+              reason: tx.reason,
+              status: newStatus,
+              items: tx.items,
+            }),
+          });
+        } catch (e) { console.error("Webhook failed:", e); }
+      }
     }
   };
 
