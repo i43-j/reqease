@@ -83,18 +83,7 @@ export function Confirmation() {
         html: receiptHtml,
       };
 
-      // Receipt webhook
-      try {
-        await fetch(N8N_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            to: email,
-            subject: `${APP_NAME} Booking Receipt — Transaction #${txId}`,
-            ...structuredData,
-          }),
-        });
-      } catch { console.warn("n8n receipt webhook failed, booking was saved."); }
+      // Review webhook (receipt webhook fires on approval via ReviewPage)
 
       // Review webhook
       try {
