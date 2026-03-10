@@ -62,13 +62,30 @@ export function ReviewPage() {
     );
 
     if (newStatus === DB.statuses.approved) {
-      try {
-        await fetch(N8N_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ transaction_id: txId }),
-        });
-      } catch (e) { console.error("Webhook failed:", e); }
+      const tx = transactions.find((t) => (t[DB.txCols.id as keyof TransactionLog] as number) === txId);
+      if (tx) {
+        const roomName = ROOMS.find((r) => r.code === tx.lab)?.name ?? null;
+        try {
+          await fetch(N8N_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              to: tx.user_email,
+              subject: `${APP_NAME} Booking Approved — Transaction #${txId}`,
+              transaction_id: txId,
+              user_email: tx.user_email,
+              room: tx.lab,
+              room_name: roomName,
+              booking_date: tx.booking_date,
+              start_time: tx.start_time,
+              end_time: tx.end_time,
+              reason: tx.reason,
+              status: newStatus,
+              items: tx.items,
+            }),
+          });
+        } catch (e) { console.error("Webhook failed:", e); }
+      }
     }
   };
 
