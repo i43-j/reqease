@@ -54,6 +54,7 @@ export function Confirmation() {
         const rows = state.cart.map((c) => ({
           [DB.txItemsCols.transactionId]: txId,
           [DB.txItemsCols.itemId]: c.item.id,
+          [DB.txItemsCols.itemName]: c.item.stock_description,
           [DB.txItemsCols.qty]: c.quantity,
         }));
         const { error: itemsError } = await supabase.from(DB.tables.transactionItems).insert(rows);

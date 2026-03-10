@@ -88,6 +88,7 @@ export const DB = {
   txItemsCols: {
     transactionId: "transaction_id",
     itemId: "item_id",
+    itemName: "item_name",
     qty: "qty",
   },
 
