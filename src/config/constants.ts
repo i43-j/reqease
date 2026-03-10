@@ -9,7 +9,7 @@ export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
 
 // ========== N8N WEBHOOK ==========
 // Replace with your n8n webhook URL for sending receipt emails
-export const N8N_WEBHOOK_URL = "https://i43-j.app.n8n.cloud/webhook-test/shap-reqease";
+export const N8N_WEBHOOK_URL = "https://i43-j.app.n8n.cloud/webhook/shap-reqease";
 export const N8N_REVIEW_WEBHOOK_URL = "https://i43-j.app.n8n.cloud/webhook/shap-reqease-due";
 
 // ========== SUPABASE STORAGE ==========
